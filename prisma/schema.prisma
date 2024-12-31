@@ -1,0 +1,53 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Translation {
+  id        Int      @id @default(autoincrement())
+  hashId    String   @unique
+  text      String
+  createdAt DateTime @default(now())
+}
+
+model DictLookup {
+  id        Int      @id @default(autoincrement())
+  hashId    String   @unique
+  text      String
+  createdAt DateTime @default(now())
+}
+
+model Book {
+  id          Int      @id @default(autoincrement())
+  fileName    String   @unique
+  coverBase64 String?
+  title       String?
+  author      String?
+  createdAt   DateTime @default(now())
+  themes      Theme[]
+}
+
+model Theme {
+  id     Int    @id @default(autoincrement())
+  css    String
+  bookId Int
+  book   Book   @relation(fields: [bookId], references: [id], onDelete: Cascade)
+  translateActive Boolean @default(false)
+}
+
+model Setting {
+  id      Int    @id @default(autoincrement())
+  type    String
+  content String
+}
+
+model book_embeddings {
+  id        Int                            @id @default(autoincrement())
+  content   String?
+  metadata  String?
+  embedding Unsupported("f32_blob(1024)")?
+}

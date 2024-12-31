@@ -1,0 +1,14 @@
+-- CreateTable
+CREATE TABLE "Theme" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "css" TEXT NOT NULL,
+    "bookId" INTEGER NOT NULL,
+    CONSTRAINT "Theme_bookId_fkey" FOREIGN KEY ("bookId") REFERENCES "Book" ("id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
+
+-- CreateTable
+CREATE TABLE "Prompt" (
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "type" TEXT NOT NULL,
+    "content" TEXT NOT NULL
+);
